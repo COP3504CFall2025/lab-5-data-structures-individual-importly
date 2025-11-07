@@ -81,6 +81,18 @@ public:
 		count++;
 	};
 
+	void AddTail(const T &data) {
+		Node* newNode = new Node{data, tail, nullptr};
+		if (tail != nullptr) {
+			tail->next = newNode;
+		}
+		tail = newNode;
+		if (head == nullptr) {
+			head = newNode;
+		}
+		count++;
+	};
+
 	// Removal
 	bool removeHead() {
 		if (head == nullptr) return false;
