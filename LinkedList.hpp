@@ -26,7 +26,7 @@ public:
 		}
 	};
 
-	void printReverse() const {
+	void PrintReverse() const {
 		Node* index = tail;
 		while (index != nullptr) {
 			std::cout << index->data << std::endl;
@@ -56,7 +56,7 @@ public:
 	};
 
 	// Insertion
-	void addHead(const T &data) {
+	void AddHead(const T &data) {
 		Node* newNode = new Node{data, nullptr, head};
 
 		if (head != nullptr) {
@@ -68,15 +68,15 @@ public:
 		}
 		count++;
 	};
+	void addHead(const T &data) {
+		Node* newNode = new Node{data, nullptr, head};
 
-	void addTail(const T &data) {
-		Node* newNode = new Node{data, tail, nullptr};
-		if (tail != nullptr) {
-			tail->next = newNode;
+		if (head != nullptr) {
+			head->prev = newNode;
 		}
-		tail = newNode;
-		if (head == nullptr) {
-			head = newNode;
+		head = newNode;
+		if (tail == nullptr) {
+			tail = newNode;
 		}
 		count++;
 	};
@@ -93,8 +93,20 @@ public:
 		count++;
 	};
 
+	void addTail(const T &data) {
+		Node* newNode = new Node{data, tail, nullptr};
+		if (tail != nullptr) {
+			tail->next = newNode;
+		}
+		tail = newNode;
+		if (head == nullptr) {
+			head = newNode;
+		}
+		count++;
+	};
+
 	// Removal
-	bool removeHead() {
+	bool RemoveHead() {
 		if (head == nullptr) return false;
 		Node* temp = head;
 		head = head->next;
@@ -102,6 +114,20 @@ public:
 			head->prev = nullptr;
 		} else {
 			tail = nullptr;
+		}
+		delete temp;
+		count--;
+		return true;
+	};
+
+	bool RemoveTail() {
+		if (tail == nullptr) return false;
+		Node* temp = tail;
+		tail = tail->prev;
+		if (tail != nullptr) {
+			tail->next = nullptr;
+		} else {
+			head = nullptr;
 		}
 		delete temp;
 		count--;
@@ -123,6 +149,19 @@ public:
 	};
 
 	void Clear() {
+		Node* deleteing = head;
+		Node* next = nullptr;
+		while (deleteing) {
+			next = deleteing->next;
+			delete deleteing;
+			deleteing = next;
+		}
+		count = 0;
+		head = nullptr;
+		tail = nullptr;
+	};
+
+	void clear() {
 		Node* deleteing = head;
 		Node* next = nullptr;
 		while (deleteing) {
