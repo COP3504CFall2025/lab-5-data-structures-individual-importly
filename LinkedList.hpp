@@ -34,6 +34,15 @@ public:
 		}
 	};
 
+
+	void printReverse() const {
+		Node* index = tail;
+		while (index != nullptr) {
+			std::cout << index->data << std::endl;
+			index = index->prev;
+		}
+	};
+
 	// Accessors
 	[[nodiscard]] unsigned int getCount() const {
 		return count;
@@ -107,6 +116,20 @@ public:
 
 	// Removal
 	bool RemoveHead() {
+		if (head == nullptr) return false;
+		Node* temp = head;
+		head = head->next;
+		if (head != nullptr) {
+			head->prev = nullptr;
+		} else {
+			tail = nullptr;
+		}
+		delete temp;
+		count--;
+		return true;
+	};
+
+	bool removeHead() {
 		if (head == nullptr) return false;
 		Node* temp = head;
 		head = head->next;
